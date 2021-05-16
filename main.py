@@ -62,15 +62,11 @@ if var:
     try:
         time.sleep(9)
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-        time.sleep(1)
         WebDriverWait(driver, timeout=5).until(ec.presence_of_element_located((By.XPATH, v.xpath_create))).click()
-        time.sleep(1)
         WebDriverWait(driver, timeout=5).until(ec.presence_of_element_located((By.XPATH, v.xpath_post))).click()
-        time.sleep(1)
         WebDriverWait(driver, timeout=5).until(ec.presence_of_element_located((By.XPATH, v.xpath_comment))).send_keys(v.comment)
-        time.sleep(1)
         WebDriverWait(driver, timeout=5).until(ec.presence_of_element_located((By.XPATH, v.xpath_image))).click()
-        time.sleep(2)
+        time.sleep(1)
         # Am utilizat AutoIT&SciTE pentru a incarca imaginea dorita
         os.startfile(v.upload_image)
         time.sleep(1)
@@ -81,11 +77,10 @@ if var:
         tb = sys.exc_info()[2]
         print(f"\n{error} line {tb.tb_lineno}")
         print("Unsuccessful post !")
-
-# Inchidere WebDriver
-if login:
-    time.sleep(10)
-    driver.close()
+    finally:
+        # Inchidere WebDriver
+        time.sleep(10)
+        driver.quit()
 
 # Timpul de executie
 execution_time = time.time() - start_time
